@@ -61,7 +61,8 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
-    'apps.rest_api'
+    'apps.rest_api',
+    'apps.Risks'
 ]
 
 INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + PROJECT_APPS
