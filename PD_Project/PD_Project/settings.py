@@ -61,7 +61,7 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
-    'rest_api.apps.RestApiConfig'
+    'apps.rest_api'
 ]
 
 INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + PROJECT_APPS
