@@ -1,0 +1,14 @@
+html{
+    font-family: "Helvetica";
+}
+.el-container{
+    
+}
+
+.el-header{
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    background-color: dodgerblue;
+    line-height: 60px;
+}
