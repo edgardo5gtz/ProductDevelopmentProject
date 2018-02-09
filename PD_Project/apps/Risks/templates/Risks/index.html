@@ -1,10 +1,55 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
 </head>
 <body>
-    <h2>I'm aliiiiiiive!!!! D:</h2>
+    <div id="app">
+        <el-container>
+            <el-header> Risks </el-header>
+        </el-container>
+        <el-main>
+            <el-row>
+                <el-col :span="16" :offset="4">
+                    <el-card class="box-card">
+                        <el-tabs type="border-card">
+                                <el-tab-pane label="Create Risks">
+                                    <el-row>
+                                        <el-col>
+                                            <el-button type="primary" >Add</el-button>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col>
+
+                                        </el-col>
+                                    </el-row>
+                                </el-tab-pane>
+                                <el-tab-pane  label="List Risks">
+                                    <el-button type="primary" @click="getRisksList">List Risks</el-button>
+                                    <ul v-for="risk in risks">
+                                        <li>${risk.name}</li>
+                                        <li>${risk.risk}</li>
+                                    </ul>
+                                </el-tab-pane>
+                            </el-tabs>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+    </div>
+
+    <!-- import JavaScript -->
+    <script src="{% static 'vue.js' %}"></script>
+    <script src="{% static 'axios.min.js' %}"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="{% static 'main.js' %}"></script>
 </body>
 </html>
