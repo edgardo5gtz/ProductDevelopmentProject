@@ -13,8 +13,8 @@ urlpatterns = [
     path('risks_api/risks/<pk>/', views.RiskDetails.as_view()),
     path('risks_api/risk_types/<pk>/', views.RiskTypeDetails.as_view()),
     path('risks_api/risk_fields/<pk>/', views.RiskFieldDetails.as_view()),
-    path('risks_api/text_fields/<pk>', views.TextFieldList.as_view()),
-    path('risks_api/date_fields/<pk>', views.DateFieldList.as_view()),
-    path('risks_api/enum_fields/<pk>', views.EnumFieldList.as_view()),
-    path('risks_api/number_fields/<pk>', views.NumberFieldList.as_view())
+    path('risks_api/text_fields/<pk>', views.TextFieldDetails.as_view()),
+    path('risks_api/date_fields/<pk>', views.DateFieldDetails.as_view()),
+    path('risks_api/enum_fields/<pk>', views.EnumFieldDetails.as_view()),
+    path('risks_api/number_fields/<pk>', views.NumberFieldDetails.as_view())
 ]
