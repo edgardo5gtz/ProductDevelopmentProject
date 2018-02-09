@@ -2,7 +2,12 @@ let vm = new Vue({
     el: '#app',
     delimiters: ['${','}'],
     data: {
-        risks: ""
+        risks: "",
+        options: [{
+            value: "Home",
+            label: "Home"
+        }],
+        value: ""
     },
     methods: {
         getRisksList:  () => {

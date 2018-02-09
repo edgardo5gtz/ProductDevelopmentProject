@@ -9,3 +9,8 @@ html{
     background-color: dodgerblue;
     line-height: 60px;
 }
+
+#add-btn{
+    float: right;
+    margin-right: 1.5rem;
+}

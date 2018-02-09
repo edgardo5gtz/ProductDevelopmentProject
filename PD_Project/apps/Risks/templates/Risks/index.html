@@ -20,26 +20,40 @@
                 <el-col :span="16" :offset="4">
                     <el-card class="box-card">
                         <el-tabs type="border-card">
-                                <el-tab-pane label="Create Risks">
-                                    <el-row>
-                                        <el-col>
-                                            <el-button type="primary" >Add</el-button>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col>
 
-                                        </el-col>
-                                    </el-row>
-                                </el-tab-pane>
-                                <el-tab-pane  label="List Risks">
-                                    <el-button type="primary" @click="getRisksList">List Risks</el-button>
-                                    <ul v-for="risk in risks">
-                                        <li>${risk.name}</li>
-                                        <li>${risk.risk}</li>
-                                    </ul>
-                                </el-tab-pane>
-                            </el-tabs>
+                            <!-- CREATE LISTS TABS -->
+                            <el-tab-pane label="Create Risks">
+                                <el-row>
+                                    <el-col :span="12">
+                                        <el-select v-model="value" placeholder="Select">
+                                            <el-option v-for="item in options"
+                                                       :key="item.value"
+                                                       :label="item.label"
+                                                       :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                    </el-col>
+                                    <el-col :span="12" >
+                                        <el-button id="add-btn" style="float: right" type="primary" >Add</el-button>
+                                    </el-col>
+                                </el-row> <!-- End Row -->
+
+                                <el-row>
+                                    <el-col>
+                                    
+                                    </el-col>
+                                </el-row>
+
+                                <!-- LIST RISKS TAB -->
+                            </el-tab-pane>
+                            <el-tab-pane  label="List Risks">
+                                <el-button type="primary"  @click="getRisksList">List Risks</el-button>
+                                <ul v-for="risk in risks">
+                                    <li>${risk.name}</li>
+                                    <li>${risk.risk}</li>
+                                </ul>
+                            </el-tab-pane>
+                        </el-tabs>
                     </el-card>
                 </el-col>
             </el-row>
