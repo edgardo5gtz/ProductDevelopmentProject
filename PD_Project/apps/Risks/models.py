@@ -44,8 +44,8 @@ class RiskField(models.Model):
 class DateFieldVal(models.Model):
     """Date field associated with a RiskField"""
     value = models.DateField()
-    #risk_type = models.ForeignKey(RiskType, related_name="risk_type", on_delete=models.CASCADE)
-    #risk_field = models.ForeignKey(RiskField, related_name="risk_field", on_delete=models.CASCADE)
+    risk_type = models.ForeignKey(RiskType, related_name="risk_type", on_delete=models.CASCADE)
+    risk_field = models.ForeignKey(RiskField, related_name="risk_field", on_delete=models.CASCADE)
 
     class Meta:
         db_table = "date_field_val"
@@ -93,8 +93,8 @@ class TextFieldVal(models.Model):
 class NumberFieldVal(models.Model):
     """Number field value associated with a RiskField"""
     value = models.IntegerField()
-    risk_type = models.ForeignKey(RiskType, related_name="number_val", on_delete=models.CASCADE, blank=True)
-    risk_field = models.ForeignKey(RiskField, related_name="number_val", on_delete=models.CASCADE, blank=True)
+    risk_type = models.ForeignKey(RiskType, related_name="number_val_type", on_delete=models.CASCADE, blank=True)
+    risk_field = models.ForeignKey(RiskField, related_name="number_val_field", on_delete=models.CASCADE, blank=True)
 
     class Meta:
         db_table = "number_field_value"

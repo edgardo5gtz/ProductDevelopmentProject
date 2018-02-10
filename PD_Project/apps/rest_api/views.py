@@ -4,8 +4,8 @@ from .serializers import *
 
 
 class RiskList(generics.ListCreateAPIView):
-    queryset = Risk.objects.all()
     serializer_class = RiskSerializer
+
 
 
 class RiskDetails(generics.RetrieveUpdateDestroyAPIView):
