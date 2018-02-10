@@ -1,23 +1,9 @@
 from django.db import models
 
 
-class RiskType(models.Model):
-    """Template for modeling a particular type of risk"""
-    type = models.CharField(max_length=50, blank=True, null=True)
-
-    class Meta:
-        db_table = "risk_type"
-        verbose_name = "Risk Type"
-        verbose_name_plural = "Risk Types"
-
-    def __str__(self):
-        return self.type
-
-
 class Risk(models.Model):
     """Custom RiskType"""
     name = models.CharField(max_length=50, blank=True, null=True)
-    risk = models.ForeignKey(RiskType, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "risk"
@@ -28,9 +14,24 @@ class Risk(models.Model):
         return self.name
 
 
+class RiskType(models.Model):
+    """Template for modeling a particular type of risk"""
+    type = models.CharField(max_length=50, blank=True, null=True)
+    risk = models.ForeignKey(Risk, related_name="risk_type", on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "risk_type"
+        verbose_name = "Risk Type"
+        verbose_name_plural = "Risk Types"
+
+    def __str__(self):
+        return self.type
+
+
 class RiskField(models.Model):
     """Data inputs associated with a particular RiskType"""
     field = models.CharField(max_length=100)
+    risk_type = models.ForeignKey(RiskType, related_name='risk_field', on_delete=models.CASCADE)
 
     class Meta:
         db_table = "risk_field"
@@ -44,8 +45,7 @@ class RiskField(models.Model):
 class DateFieldVal(models.Model):
     """Date field associated with a RiskField"""
     value = models.DateField()
-    risk_type = models.ForeignKey(RiskType, on_delete=models.CASCADE)
-    risk_field = models.ForeignKey(RiskField, on_delete=models.CASCADE)
+    risk_field = models.ForeignKey(RiskField, related_name='date_field', on_delete=models.CASCADE)
 
     class Meta:
         db_table = "date_field_val"
@@ -63,8 +63,7 @@ class EnumFieldVal(models.Model):
         ('B', 'choice_B')
     )
     value = models.CharField(choices=ENUM_OPTIONS, max_length=200)
-    risk_type = models.ForeignKey(RiskType, on_delete=models.CASCADE)
-    risk_field = models.ForeignKey(RiskField, on_delete=models.CASCADE)
+    risk_field = models.ForeignKey(RiskField, related_name='enum_field', on_delete=models.CASCADE)
 
     class Meta:
         db_table = "enum_field_val"
@@ -78,8 +77,7 @@ class EnumFieldVal(models.Model):
 class TextFieldVal(models.Model):
     """Text field value associated with a RiskField"""
     value = models.TextField()
-    risk_type = models.ForeignKey(RiskType, on_delete=models.CASCADE)
-    risk_field = models.ForeignKey(RiskField, on_delete=models.CASCADE)
+    risk_field = models.ForeignKey(RiskField, related_name='text_field', on_delete=models.CASCADE)
 
     class Meta:
         db_table = "text_field_value"
@@ -93,8 +91,7 @@ class TextFieldVal(models.Model):
 class NumberFieldVal(models.Model):
     """Number field value associated with a RiskField"""
     value = models.IntegerField()
-    risk_type = models.ForeignKey(RiskType, on_delete=models.CASCADE)
-    risk_field = models.ForeignKey(RiskField, on_delete=models.CASCADE)
+    risk_field = models.ForeignKey(RiskField, related_name='number_field', on_delete=models.CASCADE)
 
     class Meta:
         db_table = "number_field_value"
