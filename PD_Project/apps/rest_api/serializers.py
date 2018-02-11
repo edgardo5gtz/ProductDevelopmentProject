@@ -41,26 +41,26 @@ class RiskFieldSerializer(serializers.ModelSerializer):
         model = RiskField
         fields = '__all__'
 
-    def create(self, validated_data):
-        risks_number_data = validated_data.pop('number_field')
-        risks_enum_data = validated_data.pop('enum_field')
-        risks_date_data = validated_data.pop('date_field')
-        risks_text_data = validated_data.pop('text_field')
-        risk_type = RiskField.objects.create(**validated_data)
-
-        for risk_number_data in risks_number_data:
-            NumberFieldVal.objects.create(risk_field=risk_type, **risk_number_data)
-
-        for risk_text_data in risks_text_data:
-            TextFieldVal.objects.create(risk_field=risk_type, **risk_text_data)
-
-        for risk_date_data in risks_date_data:
-            DateFieldVal.objects.create(risk_field=risk_type, **risk_date_data)
-
-        for risk_enum_data in risks_enum_data:
-            EnumFieldVal.objects.create(risk_field=risk_type, **risk_enum_data)
-
-        return risk_type
+    # def create(self, validated_data):
+    #     risks_number_data = validated_data.pop('number_field')
+    #     risks_enum_data = validated_data.pop('enum_field')
+    #     risks_date_data = validated_data.pop('date_field')
+    #     risks_text_data = validated_data.pop('text_field')
+    #     risk_field = RiskField.objects.create(**validated_data)
+    #
+    #     for risk_number_data in risks_number_data:
+    #         NumberFieldVal.objects.create(risk_field=risk_field, **risk_number_data)
+    #
+    #     for risk_text_data in risks_text_data:
+    #         TextFieldVal.objects.create(risk_field=risk_field, **risk_text_data)
+    #
+    #     for risk_date_data in risks_date_data:
+    #         DateFieldVal.objects.create(risk_field=risk_field, **risk_date_data)
+    #
+    #     for risk_enum_data in risks_enum_data:
+    #         EnumFieldVal.objects.create(risk_field=risk_field, **risk_enum_data)
+    #
+    #     return risk_field
 
 
 class RiskTypeSerializer(serializers.ModelSerializer):
@@ -71,12 +71,12 @@ class RiskTypeSerializer(serializers.ModelSerializer):
         model = RiskType
         fields = '__all__'
 
-    def create(self, validated_data):
-        risks_field_data = validated_data.pop('risk_field')
-        risk_type = RiskType.objects.create(**validated_data)
-        for risk_field_data in risks_field_data:
-            RiskField.objects.create(risk_type=risk_type, **risk_field_data)
-        return risk_type
+    # def create(self, validated_data):
+    #     risks_field_data = validated_data.pop('risk_field')
+    #     risk_type = RiskType.objects.create(**validated_data)
+    #     for risk_field_data in risks_field_data:
+    #         RiskField.objects.create(risk_type=risk_type, **risk_field_data)
+    #     return risk_type
 
 
 class RiskSerializer(serializers.ModelSerializer):
@@ -85,11 +85,11 @@ class RiskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Risk
-        fields = ('id', 'name', 'risk_type')
+        fields = '__all__'
 
-    def create(self, validated_data):
-        risks_type_data = validated_data.pop('risk_type')
-        risks = Risk.objects.create(**validated_data)
-        for risk_type_data in risks_type_data:
-            RiskType.objects.create(risk=risks, **risk_type_data)
-        return risks
+    # def create(self, validated_data):
+    #     risks_type_data = validated_data.pop('risks_type')
+    #     risks = Risk.objects.create(**validated_data)
+    #     for risk_type_data in risks_type_data:
+    #         RiskType.objects.create(risk=risks, **risk_type_data)
+    #     return risks
