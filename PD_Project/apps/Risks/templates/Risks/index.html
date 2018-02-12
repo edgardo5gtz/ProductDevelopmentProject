@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Risk Project</title>
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
@@ -24,31 +24,47 @@
                             <!-- CREATE LISTS TABS -->
                             <el-tab-pane label="Create Risks">
                                 <el-row>
-                                    <el-col :span="12">
-                                        <el-select v-model="value" placeholder="Select">
-                                            <el-option v-for="item in options"
-                                                       :key="item.value"
-                                                       :label="item.label"
-                                                       :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                                    </el-col>
-                                    <el-col :span="12" >
-                                        <el-button id="add-btn" style="float: right" type="primary" >Add</el-button>
-                                    </el-col>
-                                </el-row> <!-- End Row -->
-
-                                <el-row>
-                                    <el-col>
-                                    
-                                    </el-col>
+                                    <el-form ref="form" v-model="form" label-width="120px">
+                                        <el-form-item label="Risk name">
+                                            <el-input v-model="form.risk_name" :value="form.risk_name"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="Risk type">
+                                            <el-input v-model="form.risk_type"></el-input>
+                                        </el-form-item>
+                                        <div v-for="(field, index) in form.fields">
+                                            <el-form-item :label="'Field ' + index " :key="index" >
+                                                <el-col :span="12">
+                                                    <el-input v-model="field.name"></el-input>
+                                                </el-col>
+                                                <el-col :span="12">
+                                                    <el-input v-if="field.type === 'Text'"
+                                                          type="textarea"></el-input>
+                                                <el-input v-else-if="field.type === 'Enum'"></el-input>
+                                                <el-date-picker v-else-if="field.type === 'Date'"
+                                                                placeholder="Pick a date"></el-date-picker>
+                                                <el-input-number v-else="field.type === 'Number'"></el-input-number>
+                                                </el-col>
+                                            </el-form-item>
+                                        </div>
+                                        <el-form-item label="Add new field">
+                                            <el-select v-model="new_field_type" placeholder="please select your field type">
+                                                <el-option v-for="(item, key) in form.field_types"
+                                                           :key="key"
+                                                           :label="item"
+                                                           :value="item"></el-option>
+                                            </el-select>
+                                             <el-button @click="addField">Add new field</el-button>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button id="submit-btn" type="primary" @click="addRisk">Create Risk</el-button>
+                                        </el-form-item>
+                                    </el-form>
                                 </el-row>
-
                                 <!-- LIST RISKS TAB -->
                             </el-tab-pane>
                             <el-tab-pane  label="List Risks">
-                                <!-- THIS MIGHT LOOK GOOD IN A COMPONENT -->
-                                <el-button type="primary"  @click="getRisksList">List Risks</el-button>
+                                <!-- THIS MIGHT DEFINITELY LOOK BETTER IN A COMPONENT -->
+                                <el-button id="list-risk-btn" type="primary" @click="getRisksList">List Risks</el-button>
                                 <el-collapse value="1" accordion>
                                     <el-collapse-item v-for="risk in risks" :key="risk.id" :title="risk.name" :name="risk.id">
                                         <h3>${risk.risk_type[0].type}</h3>
@@ -85,5 +101,6 @@
     <script src="{% static 'axios.min.js' %}"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="{% static 'main.js' %}"></script>
+
 </body>
 </html>
