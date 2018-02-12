@@ -40,8 +40,8 @@ let vm = new Vue({
             }
         },
         postRisk: () => {
-            
-        ,
+            {}
+        },
         postRiskType: () => {
 
         },
