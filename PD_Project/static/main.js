@@ -33,13 +33,25 @@ let vm = new Vue({
         },
         addRisk: () => {
 
+            function postRisk(risk_name){
+                return axios.post({
+
+                });
+            }
+        },
+        postRisk: () => {
+            
+        ,
+        postRiskType: () => {
+
+        },
+        postRisk: () => {
+
         },
         removeField: () => {
 
         },
         addField () {
-            let a = this.new_field_type;
-            console.log(a);
             this.form.fields.push({
                 name: "",
                 type: this.new_field_type,

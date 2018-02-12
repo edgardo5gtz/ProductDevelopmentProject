@@ -17,7 +17,7 @@
         </el-container>
         <el-main>
             <el-row>
-                <el-col :span="16" :offset="4">
+                <el-col :span="10" :offset="7">
                     <el-card class="box-card">
                         <el-tabs type="border-card">
 
@@ -34,19 +34,19 @@
                                         <div v-for="(field, index) in form.fields">
                                             <el-form-item :label="'Field ' + index " :key="index" >
                                                 <el-col :span="12">
-                                                    <el-input v-model="field.name"></el-input>
+                                                    <el-input v-model="field.name" placeholder="Field name"></el-input>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <el-input v-if="field.type === 'Text'"
-                                                          type="textarea"></el-input>
-                                                <el-input v-else-if="field.type === 'Enum'"></el-input>
-                                                <el-date-picker v-else-if="field.type === 'Date'"
-                                                                placeholder="Pick a date"></el-date-picker>
-                                                <el-input-number v-else="field.type === 'Number'"></el-input-number>
+                                                              type="textarea"></el-input>
+                                                    <el-input v-else-if="field.type === 'Enum'"></el-input>
+                                                    <el-date-picker v-else-if="field.type === 'Date'"
+                                                                    placeholder="Pick a date"></el-date-picker>
+                                                    <el-input-number v-else="field.type === 'Number'"></el-input-number>
                                                 </el-col>
                                             </el-form-item>
                                         </div>
-                                        <el-form-item label="Add new field">
+                                        <el-form-item label="New field">
                                             <el-select v-model="new_field_type" placeholder="please select your field type">
                                                 <el-option v-for="(item, key) in form.field_types"
                                                            :key="key"
