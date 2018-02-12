@@ -38,11 +38,15 @@
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <el-input v-if="field.type === 'Text'"
-                                                              type="textarea"></el-input>
-                                                    <el-input v-else-if="field.type === 'Enum'"></el-input>
+                                                              type="textarea"
+                                                              v-model="field.value"></el-input>
+                                                    <el-input v-else-if="field.type === 'Enum'"
+                                                              v-model="field.value"></el-input>
                                                     <el-date-picker v-else-if="field.type === 'Date'"
-                                                                    placeholder="Pick a date"></el-date-picker>
-                                                    <el-input-number v-else="field.type === 'Number'"></el-input-number>
+                                                                    placeholder="Pick a date"
+                                                                    v-model="field.value"></el-date-picker>
+                                                    <el-input-number v-else="field.type === 'Number'"
+                                                                     v-model="field.value"></el-input-number>
                                                 </el-col>
                                             </el-form-item>
                                         </div>
