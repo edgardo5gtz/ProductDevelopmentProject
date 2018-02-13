@@ -24,29 +24,43 @@
                             <!-- CREATE LISTS TABS -->
                             <el-tab-pane label="Create Risks">
                                 <el-row>
-                                    <el-form ref="form" v-model="form" label-width="120px">
-                                        <el-form-item label="Risk name">
+                                    <el-form v-model="form" ref="form" :rules="rules" label-width="120px">
+                                        <el-form-item label="Risk name" prop="risk_name">
                                             <el-input v-model="form.risk_name" :value="form.risk_name"></el-input>
                                         </el-form-item>
-                                        <el-form-item label="Risk type">
+                                        <el-form-item label="Risk type" prop="risk_type">
                                             <el-input v-model="form.risk_type"></el-input>
                                         </el-form-item>
                                         <div v-for="(field, index) in form.fields">
-                                            <el-form-item :label="'Field ' + index " :key="index" >
-                                                <el-col :span="12">
-                                                    <el-input v-model="field.name" placeholder="Field name"></el-input>
+                                            <el-form-item :label="'Field ' + index " :key="index">
+                                                <el-col :span="9">
+                                                    <el-form-item prop="field_name">
+                                                        <el-input v-model="field.name" placeholder="Field name"></el-input>
+                                                    </el-form-item>
                                                 </el-col>
-                                                <el-col :span="12">
-                                                    <el-input v-if="field.type === 'Text'"
-                                                              type="textarea"
-                                                              v-model="field.value"></el-input>
-                                                    <el-input v-else-if="field.type === 'Enum'"
-                                                              v-model="field.value"></el-input>
-                                                    <el-date-picker v-else-if="field.type === 'Date'"
-                                                                    placeholder="Pick a date"
-                                                                    v-model="field.value"></el-date-picker>
-                                                    <el-input-number v-else="field.type === 'Number'"
-                                                                     v-model="field.value"></el-input-number>
+                                                <el-col :span="9">
+                                                    <el-form-item>
+                                                        <el-input v-if="field.type === 'Text'"
+                                                                  type="textarea"
+                                                                  v-model="field.value"></el-input>
+                                                        <el-select v-else-if="field.type === 'Enum'"
+                                                                   v-model="field.value"
+                                                                   placeholder="choices">
+                                                            <el-option v-for="(item, key) in form.enum_choices"
+                                                                       :key="key"
+                                                                       :label="item"
+                                                                       :value="item"></el-option>
+                                                        </el-select>
+                                                        <el-date-picker v-else-if="field.type === 'Date'"
+                                                                        placeholder="Pick a date"
+                                                                        v-model="field.value"
+                                                                        value-format="yyyy-MM-dd"></el-date-picker>
+                                                        <el-input-number v-else="field.type === 'Number'"
+                                                                         v-model="field.value"></el-input-number>
+                                                    </el-form-item>
+                                                </el-col>
+                                                <el-col :span="6">
+                                                    <el-button type="danger" @click.prevent="removeField(field)">Delete</el-button>
                                                 </el-col>
                                             </el-form-item>
                                         </div>
@@ -71,21 +85,28 @@
                                 <el-button id="list-risk-btn" type="primary" @click="getRisksList">List Risks</el-button>
                                 <el-collapse value="1" accordion>
                                     <el-collapse-item v-for="risk in risks" :key="risk.id" :title="risk.name" :name="risk.id">
-                                        <h3>${risk.risk_type[0].type}</h3>
+                                        <h3 v-if="risk.risk_type != 0">${risk.risk_type[0].type}</h3>
                                         <ul>
-                                            <li v-for="field in risk.risk_type[0].risk_field" :key="field.id">
+                                            <li v-for="field in risk.risk_type[0].risk_field"
+                                                v-if="risk.risk_type[0].risk_field.length >= 1"
+                                                :key="field.id">
                                                 <div>${field.field}</div>
-                                                <div v-if="field.enum_field.length != 0 ">
+                                                <div v-if="field.enum_field.length >= 1 ">
+
                                                     ${field.enum_field[0].value}
                                                 </div>
-                                                <div v-else-if="field.text_field.length != 0 ">
+                                                <div v-else-if="field.text_field.length >= 1 ">
+
                                                     ${field.text_field[0].value}
                                                 </div>
-                                                <div v-else-if="field.date_field.length != 0 ">
+                                                <div v-else-if="field.date_field.length >= 1 ">
                                                     ${field.date_field[0].value}
                                                 </div>
-                                                <div v-else="field.number_field.length != 0 ">
+                                                <div v-else-if="field.number_field.length >= 1 ">
                                                     ${field.number_field[0].value}
+                                                </div>
+                                                 <div v-else="field.number_field.length >= 1 ">
+                                                    :(
                                                 </div>
                                             </li>
                                         </ul>

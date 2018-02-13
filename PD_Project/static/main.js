@@ -14,25 +14,54 @@ let vm = new Vue({
                     "Date",
                     "Enum"
                 ],
+                enum_choices: [
+                    "A",
+                    "B",
+                    "C",
+                    "D"
+                ],
+            },
+            rules: {
+                risk_name: [
+                    {required: true, message: 'Please input risk name', trigger: 'blur'},
+                ],
+                risk_type: [
+                    {required: true, message: 'Please input risk type', trigger: 'blur'},
+                ],
+                field_name: [
+                    {required: true, message: 'Please input field name', trigger: 'blur'},
+                ],
+                number_field: [
+                    {type: 'number', required: true, message: 'Please pick a number', trigger: 'change'}
+                ],
+                enum_field: [
+                    { type: 'text', required: true, message: 'Please pick a choice', trigger: 'change' }
+                ],
+                date_field: [
+                    {type: 'date', required: true, message: 'Please pick a date', trigger: 'change'}
+                ],
+                text_field: [
+                    { min: 2, max: 500, message: 'Length max is 500 char and min 2', trigger: 'blur' }
+                ]
             },
             new_field_type: '',
-        }},
+        }
+    },
     methods: {
         getRisksList:  () => {
             axios.get('/risks_api/risks/')
-                .then((response) => {
-                    this.error = false;
+                .then((response) => {;
                     vm.risks = response.data;
                     console.log(response.data);
                 })
                 .catch((error) => {
-                    this.error = true;
-                    this.risks = "Ups";
+                    vm.risks = "Ups";
                     console.log(error);
                 });
         },
         addRisk: () => {
             vm.postRisk()
+            vm.$refs.form.resetFields();
         },
         postRisk: () => {
             axios.post('/risks_api/risks/', {
@@ -91,13 +120,16 @@ let vm = new Vue({
                     return 0
             }
         },
-        removeField: () => {
-
+        removeField: (item) => {
+            let index = vm.form.fields.indexOf(item);
+            if (index !== -1) {
+                vm.form.fields.splice(index, 1);
+            }
         },
         addField () {
             this.form.fields.push({
                 name: "",
-                type: this.new_field_type,
+                type: vm.new_field_type,
                 value: ""
             });
         }

@@ -60,7 +60,9 @@ class EnumFieldVal(models.Model):
     """Enum field value associated with a RiskField"""
     ENUM_OPTIONS = (
         ('A', 'choice_A'),
-        ('B', 'choice_B')
+        ('B', 'choice_B'),
+        ('C', 'choice_C'),
+        ('B', 'choice_D')
     )
     value = models.CharField(choices=ENUM_OPTIONS, max_length=200)
     risk_field = models.ForeignKey(RiskField, related_name='enum_field', on_delete=models.CASCADE)
