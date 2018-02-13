@@ -16,34 +16,14 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Get all the information needed for independent development from secrets.json
-_secret = os.path.join(BASE_DIR, "secrets.json")
-with open(_secret) as f:
-    _secrets = json.loads(f.read())
-
-
-def get_secret(_setting, _secret=_secrets):
-    """Returns an specific setting from the secrets.json file"""
-    try:
-        return _secrets[_setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(_setting)
-        raise ImproperlyConfigured(error_msg)
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = "ASecretKey"
+DEBUG = False
 
-# SECURITY WARNING: don't run with debug turned on in production!
-if get_secret("DEBUG") == 1:
-    DEBUG = True
-else:
-    DEBUG = False
-
-ALLOWED_HOSTS = get_secret("ALLOWED_HOSTS")
+ALLOWED_HOSTS = "*"
 
 # Application definition
 
@@ -100,17 +80,28 @@ WSGI_APPLICATION = 'PD_Project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': get_secret("DB_NAME"),
-            'USER': get_secret("DB_USER"),
-            'PASSWORD': get_secret("DB_PASSWORD"),
-            'HOST': get_secret("DB_HOST"),
-            'PORT': get_secret("DB_PORT"),
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
         }
-}
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'PDLocal',
+            'USER': 'postgres',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -148,7 +139,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')

@@ -8,9 +8,6 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 """
 
 import os
-import sys
-sys.path.append('/home/Escritorio/BriteCore/ProductDevelopmentProject/PD_Project')
-sys.path.append('/home/Escritorio/BriteCore/ProductDevelopmentProject/PD_Project/PD_Project')
 
 from django.core.wsgi import get_wsgi_application
 
