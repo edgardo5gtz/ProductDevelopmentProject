@@ -35,13 +35,8 @@ def get_secret(_setting, _secret=_secrets):
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-if get_secret("DEBUG") == 1:
-    DEBUG = True
-else:
-    DEBUG = False
+SECRET_KEY = "ASecretKey"
+DEBUG = False
 
 ALLOWED_HOSTS = get_secret("ALLOWED_HOSTS")
 
@@ -104,11 +99,11 @@ WSGI_APPLICATION = 'PD_Project.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': get_secret("DB_NAME"),
-            'USER': get_secret("DB_USER"),
-            'PASSWORD': get_secret("DB_PASSWORD"),
-            'HOST': get_secret("DB_HOST"),
-            'PORT': get_secret("DB_PORT"),
+            'NAME': 'PD_DB',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '5432',
         }
 }
 
