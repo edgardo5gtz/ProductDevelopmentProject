@@ -1,3 +1,4 @@
+
 let vm = new Vue({
     el: '#app',
     delimiters: ['${','}'],
@@ -21,29 +22,6 @@ let vm = new Vue({
                     "D"
                 ],
             },
-            rules: {
-                risk_name: [
-                    {required: true, message: 'Please input risk name', trigger: 'blur'},
-                ],
-                risk_type: [
-                    {required: true, message: 'Please input risk type', trigger: 'blur'},
-                ],
-                field_name: [
-                    {required: true, message: 'Please input field name', trigger: 'blur'},
-                ],
-                number_field: [
-                    {type: 'number', required: true, message: 'Please pick a number', trigger: 'change'}
-                ],
-                enum_field: [
-                    { type: 'text', required: true, message: 'Please pick a choice', trigger: 'change' }
-                ],
-                date_field: [
-                    {type: 'date', required: true, message: 'Please pick a date', trigger: 'change'}
-                ],
-                text_field: [
-                    { min: 2, max: 500, message: 'Length max is 500 char and min 2', trigger: 'blur' }
-                ]
-            },
             new_field_type: '',
         }
     },
@@ -60,8 +38,7 @@ let vm = new Vue({
                 });
         },
         addRisk: () => {
-            vm.postRisk()
-            vm.$refs.form.resetFields();
+            vm.postRisk();
         },
         postRisk: () => {
             axios.post('/risks_api/risks/', {

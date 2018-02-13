@@ -24,17 +24,17 @@
                             <!-- CREATE LISTS TABS -->
                             <el-tab-pane label="Create Risks">
                                 <el-row>
-                                    <el-form v-model="form" ref="form" :rules="rules" label-width="120px">
-                                        <el-form-item label="Risk name" prop="risk_name">
+                                    <el-form v-model="form" ref="form" label-width="120px">
+                                        <el-form-item label="Risk name">
                                             <el-input v-model="form.risk_name" :value="form.risk_name"></el-input>
                                         </el-form-item>
-                                        <el-form-item label="Risk type" prop="risk_type">
+                                        <el-form-item label="Risk type">
                                             <el-input v-model="form.risk_type"></el-input>
                                         </el-form-item>
                                         <div v-for="(field, index) in form.fields">
-                                            <el-form-item :label="'Field ' + index " :key="index">
+                                            <el-row>
                                                 <el-col :span="9">
-                                                    <el-form-item prop="field_name">
+                                                    <el-form-item :label="'Field ' + index " :key="index">
                                                         <el-input v-model="field.name" placeholder="Field name"></el-input>
                                                     </el-form-item>
                                                 </el-col>
@@ -60,9 +60,11 @@
                                                     </el-form-item>
                                                 </el-col>
                                                 <el-col :span="6">
-                                                    <el-button type="danger" @click.prevent="removeField(field)">Delete</el-button>
+                                                    <el-form-item>
+                                                        <el-button type="danger" @click.prevent="removeField(field)">Delete</el-button>
+                                                    </el-form-item>
                                                 </el-col>
-                                            </el-form-item>
+                                            </el-row>
                                         </div>
                                         <el-form-item label="New field">
                                             <el-select v-model="new_field_type" placeholder="please select your field type">
@@ -74,7 +76,7 @@
                                              <el-button @click="addField">Add new field</el-button>
                                         </el-form-item>
                                         <el-form-item>
-                                            <el-button id="submit-btn" type="primary" @click="addRisk">Create Risk</el-button>
+                                            <el-button id="submit-btn" type="primary" @click="addRisk('form'    )">Create Risk</el-button>
                                         </el-form-item>
                                     </el-form>
                                 </el-row>
@@ -120,7 +122,6 @@
             </el-row>
         </el-main>
     </div>
-
     <!-- import JavaScript -->
     <script src="{% static 'vue.js' %}"></script>
     <script src="{% static 'axios.min.js' %}"></script>
