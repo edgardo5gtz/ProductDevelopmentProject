@@ -32,7 +32,7 @@
                                             <el-input v-model="form.risk_type"></el-input>
                                         </el-form-item>
                                         <div v-for="(field, index) in form.fields">
-                                            <el-row>
+                                            <el-form-item>
                                                 <el-col :span="9">
                                                     <el-form-item :label="'Field ' + index " :key="index">
                                                         <el-input v-model="field.name" placeholder="Field name"></el-input>
@@ -64,7 +64,7 @@
                                                         <el-button type="danger" @click.prevent="removeField(field)">Delete</el-button>
                                                     </el-form-item>
                                                 </el-col>
-                                            </el-row>
+                                            </el-form-item>
                                         </div>
                                         <el-form-item label="New field">
                                             <el-select v-model="new_field_type" placeholder="please select your field type">
