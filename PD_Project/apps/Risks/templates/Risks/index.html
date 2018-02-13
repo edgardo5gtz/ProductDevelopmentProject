@@ -84,7 +84,9 @@
                             </el-tab-pane>
                             <el-tab-pane  label="List Risks">
                                 <!-- THIS MIGHT DEFINITELY LOOK BETTER IN A COMPONENT -->
-                                <el-button id="list-risk-btn" type="primary" @click="getRisksList">List Risks</el-button>
+                                <el-row>
+                                    <el-button id="list-risk-btn" type="primary" @click="getRisksList">List Risks</el-button>
+                                </el-row>
                                 <el-collapse value="1" accordion>
                                     <el-collapse-item v-for="risk in risks" :key="risk.id" :title="risk.name" :name="risk.id">
                                         <h3 v-if="risk.risk_type != 0">${risk.risk_type[0].type}</h3>
