@@ -1,0 +1,21 @@
+html{
+    font-family: "Helvetica", "Arial", "Times New Roman";
+}
+
+.el-header{
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    background-color: dodgerblue;
+    line-height: 60px;
+}
+
+#submit-btn{
+    float: right;
+    margin-right: 1.5rem;
+}
+
+#list-risk-btn{
+    float: right;
+    margin: 1.5rem 0 0 1.5rem;
+}

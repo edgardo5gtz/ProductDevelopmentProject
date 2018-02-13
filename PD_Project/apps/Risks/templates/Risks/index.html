@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Risk Project</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header> Risks </el-header>
+        </el-container>
+        <el-main>
+            <el-row>
+                <el-col :span="10" :offset="7">
+                    <el-card class="box-card">
+                        <el-tabs type="border-card">
+
+                            <!-- CREATE LISTS TABS -->
+                            <el-tab-pane label="Create Risks">
+                                <el-row>
+                                    <el-form v-model="form" ref="form" label-width="120px">
+                                        <el-form-item label="Risk name">
+                                            <el-input v-model="form.risk_name" :value="form.risk_name"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="Risk type">
+                                            <el-input v-model="form.risk_type"></el-input>
+                                        </el-form-item>
+                                        <div v-for="(field, index) in form.fields">
+                                            <el-form-item>
+                                                <el-col :span="9">
+                                                    <el-form-item :label="'Field ' + index " :key="index">
+                                                        <el-input v-model="field.name" placeholder="Field name"></el-input>
+                                                    </el-form-item>
+                                                </el-col>
+                                                <el-col :span="9">
+                                                    <el-form-item>
+                                                        <el-input v-if="field.type === 'Text'"
+                                                                  type="textarea"
+                                                                  v-model="field.value"></el-input>
+                                                        <el-select v-else-if="field.type === 'Enum'"
+                                                                   v-model="field.value"
+                                                                   placeholder="choices">
+                                                            <el-option v-for="(item, key) in form.enum_choices"
+                                                                       :key="key"
+                                                                       :label="item"
+                                                                       :value="item"></el-option>
+                                                        </el-select>
+                                                        <el-date-picker v-else-if="field.type === 'Date'"
+                                                                        placeholder="Pick a date"
+                                                                        v-model="field.value"
+                                                                        value-format="yyyy-MM-dd"></el-date-picker>
+                                                        <el-input-number v-else="field.type === 'Number'"
+                                                                         v-model="field.value"></el-input-number>
+                                                    </el-form-item>
+                                                </el-col>
+                                                <el-col :span="6">
+                                                    <el-form-item>
+                                                        <el-button type="danger" @click.prevent="removeField(field)">Delete</el-button>
+                                                    </el-form-item>
+                                                </el-col>
+                                            </el-form-item>
+                                        </div>
+                                        <el-form-item label="New field">
+                                            <el-select v-model="new_field_type" placeholder="please select your field type">
+                                                <el-option v-for="(item, key) in form.field_types"
+                                                           :key="key"
+                                                           :label="item"
+                                                           :value="item"></el-option>
+                                            </el-select>
+                                             <el-button @click="addField">Add new field</el-button>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button id="submit-btn" type="primary" @click="addRisk('form'    )">Create Risk</el-button>
+                                        </el-form-item>
+                                    </el-form>
+                                </el-row>
+                                <!-- LIST RISKS TAB -->
+                            </el-tab-pane>
+                            <el-tab-pane  label="List Risks">
+                                <!-- THIS MIGHT DEFINITELY LOOK BETTER IN A COMPONENT -->
+                                <el-row>
+                                    <el-button id="list-risk-btn" type="primary" @click="getRisksList">List Risks</el-button>
+                                </el-row>
+                                <el-collapse value="1" accordion>
+                                    <el-collapse-item v-for="risk in risks" :key="risk.id" :title="risk.name" :name="risk.id">
+                                        <h3 v-if="risk.risk_type != 0">${risk.risk_type[0].type}</h3>
+                                        <ul>
+                                            <li v-for="field in risk.risk_type[0].risk_field"
+                                                v-if="risk.risk_type[0].risk_field.length >= 1"
+                                                :key="field.id">
+                                                <div>${field.field}</div>
+                                                <div v-if="field.enum_field.length >= 1 ">
+
+                                                    ${field.enum_field[0].value}
+                                                </div>
+                                                <div v-else-if="field.text_field.length >= 1 ">
+
+                                                    ${field.text_field[0].value}
+                                                </div>
+                                                <div v-else-if="field.date_field.length >= 1 ">
+                                                    ${field.date_field[0].value}
+                                                </div>
+                                                <div v-else-if="field.number_field.length >= 1 ">
+                                                    ${field.number_field[0].value}
+                                                </div>
+                                                 <div v-else="field.number_field.length >= 1 ">
+                                                    :(
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </el-collapse-item>
+                                </el-collapse>
+
+                            </el-tab-pane>
+                        </el-tabs>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+    </div>
+    <!-- import JavaScript -->
+    <script src="{% static 'vue.js' %}"></script>
+    <script src="{% static 'axios.min.js' %}"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="{% static 'main.js' %}"></script>
+
+</body>
+</html>
