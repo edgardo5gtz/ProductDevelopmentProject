@@ -16,21 +16,6 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Get all the information needed for independent development from secrets.json
-_secret = os.path.join(BASE_DIR, "secrets.json")
-with open(_secret) as f:
-    _secrets = json.loads(f.read())
-
-
-def get_secret(_setting, _secret=_secrets):
-    """Returns an specific setting from the secrets.json file"""
-    try:
-        return _secrets[_setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(_setting)
-        raise ImproperlyConfigured(error_msg)
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -38,7 +23,7 @@ def get_secret(_setting, _secret=_secrets):
 SECRET_KEY = "ASecretKey"
 DEBUG = False
 
-ALLOWED_HOSTS = get_secret("ALLOWED_HOSTS")
+ALLOWED_HOSTS = "*"
 
 # Application definition
 
